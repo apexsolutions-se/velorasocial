@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Velora Social — Social Media Management</title>
+  <meta name="description" content="Sophisticated social media management for modern brands. Strategy, content, and growth — done with taste." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.085);
+      --text: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.65);
+      --line: rgba(255,255,255,.12);
+      --brand: #7c5cff;
+      --brand2:#23d5ff;
+      --ok:#3dffb5;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1440px
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: #07080b; /* simple base */
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 80px}
+
+
+    body::before{
+     content:"";
+    position: fixed;
+    inset: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(var(--max), 100%);
+    pointer-events: none;
+    z-index: -1;
+
+    background:
+        radial-gradient(900px 600px at 15% 10%, rgba(124,92,255,.30), transparent 60%),
+        radial-gradient(900px 650px at 85% 15%, rgba(35,213,255,.22), transparent 60%),
+        radial-gradient(1100px 700px at 50% 100%, rgba(61,255,181,.12), transparent 60%),
+        linear-gradient(180deg, #07080b, var(--bg) 55%, #07080b);
+}
+
+    /* Top nav */
+    .nav{
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      background: rgba(12,14,19,.55);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:700; letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: transparent;
+      box-shadow: transparent;
+      position:relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:9px;
+      border-radius:10px;
+      background: rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.20);
+    }
+
+    .links{display:flex; gap:18px; align-items:center; flex-wrap:wrap}
+    .links a{
+      color:var(--muted);
+      font-size:14px;
+      padding:8px 10px;
+      border-radius:999px;
+    }
+    .links a:hover{color:var(--text); background: rgba(255,255,255,.06)}
+    .cta{
+      display:flex; gap:10px; align-items:center;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap:9px;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18)}
+    .btn.primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#071018;
+      box-shadow: 0 16px 40px rgba(124,92,255,.22);
+    }
+    .btn.primary:hover{transform: translateY(-1px) scale(1.01)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      width: fit-content;
+    }
+    .dot{
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+/* Pulsing ring */
+.dot::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(61,255,181,0.35);
+  animation: pulse 2.2s ease-out infinite;
+}
+@keyframes pulse{
+  0%{
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%{
+    transform: scale(3);
+    opacity: 0;
+  }
+  100%{
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+    
+
+    /* Hero */
+    .hero{
+      margin-top: 26px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items:stretch;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .hero-left{padding:30px 28px}
+    h1{
+      margin: 14px 0 12px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.03;
+      letter-spacing: -1.2px;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 56ch;
+      margin: 0 0 18px;
+    }
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .mini{
+      margin-top: 18px;
+      display:flex; gap:12px; flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .mini span{
+      display:flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .mini i{
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(255,255,255,.22);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.05);
+    }
+
+    /* Hero right */
+    .hero-right{
+      padding: 18px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mock{
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(600px 360px at 30% 10%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(520px 360px at 90% 30%, rgba(35,213,255,.18), transparent 60%),
+        rgba(255,255,255,.04);
+      padding: 16px;
+      min-height: 240px;
+      position:relative;
+      overflow:hidden;
+    }
+    .mock:before{
+      content:"";
+      position:absolute;
+      inset:-80px -120px auto auto;
+      width:260px; height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(61,255,181,.22), transparent 60%);
+      transform: rotate(25deg);
+      filter: blur(0px);
+    }
+    .mock-top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .mock-tabs{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+    }
+    .metric-grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .metric{
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+    }
+    .metric b{display:block; font-size:18px; letter-spacing:-.3px}
+    .metric small{color: var(--muted)}
+   .spark{
+  margin-top:10px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  position:relative;
+  overflow:hidden;
+}
+
+/* animated fill */
+.spark::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  width: 0%;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(124,92,255,.0), rgba(124,92,255,.28), rgba(35,213,255,.22), rgba(61,255,181,.18));
+  transition: width 1200ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* keep your subtle grid overlay */
+.spark::after{
+  content:"";
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.0) 0px,
+    rgba(255,255,255,.0) 18px,
+    rgba(255,255,255,.08) 19px
+  );
+  opacity:.35;
+  pointer-events:none;
+}
+
+
+.spark.is-filled::before{ width: var(--fill, 0%); }
+
+    /* Sections */
+    section{margin-top: 26px}
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 14px;
+      margin: 18px 2px 12px;
+    }
+    h2{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: -.3px;
+    }
+    .hint{color:var(--muted); font-size:14px; line-height:1.5; max-width: 56ch}
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px}
+    .grid-2{display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px}
+
+    .tile{
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+    .tile h3{margin: 8px 0 8px; font-size: 16px}
+    .tile p{margin:0; color: var(--muted); font-size: 14px; line-height:1.55}
+    .icon{
+      width:40px; height:40px; border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(35,213,255,.15));
+      display:grid; place-items:center;
+      color: rgba(255,255,255,.82);
+      font-weight:700;
+      letter-spacing:-.5px;
+    }
+
+    /* Case studies */
+    .case{
+      display:flex; flex-direction:column; gap:10px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+    }
+    .case-top{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .badge{
+      font-size:12px; color: var(--muted);
+      padding:6px 10px; border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+    }
+    .kpis{display:flex; gap:10px; flex-wrap:wrap}
+    .kpi{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      min-width: 120px;
+    }
+    .kpi b{display:block; font-size:16px}
+    .kpi small{color: var(--muted)}
+
+    /* Pricing */
+    .price{
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      position:relative;
+      overflow:hidden;
+    }
+    .price.featured{
+      background: linear-gradient(180deg, rgba(124,92,255,.22), rgba(255,255,255,.04));
+      border-color: rgba(124,92,255,.40);
+      box-shadow: 0 18px 70px rgba(124,92,255,.16);
+    }
+    .price h3{margin: 6px 0 6px}
+    .money{
+      font-size: 30px;
+      letter-spacing:-.8px;
+      margin: 6px 0 10px;
+    }
+    ul{margin:0; padding-left: 18px; color: var(--muted); font-size:14px; line-height:1.6}
+    li{margin: 6px 0}
+    .price .btn{margin-top: 14px; width: 100%; justify-content:center}
+
+    /* Testimonials */
+    .quote{
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .quote p{margin:0; color: var(--text); line-height:1.65}
+    .who{margin-top: 10px; color: var(--muted); font-size:14px}
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .form{
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    label{display:block; font-size: 13px; color: var(--muted); margin: 10px 0 6px}
+    input, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    textarea{min-height: 120px; resize: vertical}
+    input:focus, textarea:focus{border-color: rgba(35,213,255,.35)}
+    .foot{
+      margin-top: 20px;
+      padding: 20px 12px 0;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{grid-template-columns: 1fr}
+      .grid-3{grid-template-columns: 1fr}
+      .grid-2{grid-template-columns: 1fr}
+      .contact{grid-template-columns: 1fr}
+      .links{display:none}
+    }
+
+
+    /* Work galleries (9 square images per project) */
+.work-grid{
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.work-grid img{
+  width: 100%;
+  aspect-ratio: 1 / 1;       /* keeps it perfectly square */
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  transition: transform .18s ease, border-color .18s ease, filter .18s ease;
+}
+
+.work-grid img:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.20);
+  filter: saturate(1.08) contrast(1.03);
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <div class="brand">
+        <img src="images/velora.logo.png" alt="Velora Social logo" class="logo">
+        <div>
+          Velora Social
+          <div style="font-weight:500; font-size:12px; color:rgba(255,255,255,.55); margin-top:2px;">
+            Social media management & content
+          </div>
+        </div>
+      </div>
+
+      <nav class="links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="cta">
+        <a class="btn" href="#pricing">View packages</a>
+        <a class="btn primary" href="#contact">Book a call →</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card hero-left">
+          <div class="pill"><span class="dot"></span> Now accepting new clients • Feb–Mar slots</div>
+          <h1>Social media that feels premium — and performs.</h1>
+          <p class="sub">
+            We manage strategy, content, and community with a calm, modern aesthetic.
+            Built for brands that want consistent growth without looking “salesy.”
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Get a free audit</a>
+            <a class="btn" href="#work">See work</a>
+          </div>
+
+          <div class="mini" aria-label="Highlights">
+            <span><i></i> Strategy + content system</span>
+            <span><i></i> Reels, carousels, stories</span>
+            <span><i></i> Monthly reporting</span>
+          </div>
+        </div>
+
+        <aside class="card hero-right">
+          <div class="mock">
+            <div class="mock-top">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22)"></div>
+                <div style="font-size:13px; color:rgba(255,255,255,.72);">Monthly Performance Snapshot</div>
+              </div>
+              <div class="mock-tabs">
+                <span class="tag">Overview</span>
+                <span class="tag">Content</span>
+                <span class="tag">Insights</span>
+              </div>
+            </div>
+
+            <div class="metric-grid">
+            <div class="metric">
+                <b class="countup" data-value="38" data-format="percent" data-prefix="+" data-suffix="%">0%</b>
+                <small>Reach (30 days)</small>
+                <div class="spark" data-fill="78" aria-hidden="true"></div>
+            </div>
+
+            <div class="metric">
+                <b class="countup" data-value="4.6" data-format="percent" data-suffix="%">0%</b>
+                <small>Engagement rate</small>
+                <div class="spark" data-fill="62" aria-hidden="true"></div>
+            </div>
+
+            <div class="metric">
+                <b class="countup" data-value="1240" data-format="number" data-prefix="+">0</b>
+                <small>Followers</small>
+                <div class="spark" data-fill="85" aria-hidden="true"></div>
+            </div>
+
+            <div class="metric">
+                <b class="countup" data-value="112" data-format="number">0</b>
+                <small>Leads</small>
+                <div class="spark" data-fill="52" aria-hidden="true"></div>
+            </div>
+            </div>
+
+
+          <div class="tile" style="margin-top: 10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div>
+                <div style="font-weight:700;">What you get</div>
+                <div style="color:var(--muted); font-size:13px; margin-top:3px;">A complete monthly content engine.</div>
+              </div>
+              <span class="badge">Sleek • Consistent • On-brand</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="services">
+        <div class="section-head">
+          <div>
+            <h2>Services</h2>
+            <div class="hint">Pick a full-service package or mix-and-match support. Everything is designed to look refined while still driving real results.</div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="tile">
+            <div class="icon">S</div>
+            <h3>Strategy & positioning</h3>
+            <p>Messaging, content pillars, posting rhythm, and a plan that matches your audience — without copying trends.</p>
+          </div>
+          <div class="tile">
+            <div class="icon">C</div>
+            <h3>Content creation</h3>
+            <p>Reels, carousels, stories, captions, and brand templates. Clean visuals that feel expensive and intentional.</p>
+          </div>
+          <div class="tile">
+            <div class="icon">G</div>
+            <h3>Growth & community</h3>
+            <p>Engagement, replies, and light community management to build trust and turn attention into leads.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="work">
+  <div class="section-head">
+    <div>
+      <h2>Selected work</h2>
+      <div class="hint">
+        A selection of sample content and concepts to show our visual style, structure, and approach.
+      </div>
+    </div>
+    <a class="btn" href="#contact">Request a portfolio →</a>
+  </div>
+
+  <div class="grid-2">
+    <!-- Project 1 -->
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <div style="font-weight:700">El Toro </div>
+          <div style="color:var(--muted); font-size:13px; margin-top:2px;">Feed direction • Reels concepts • Caption tone</div>
+        </div>
+        
+      </div>
+
+      <div class="work-grid">
+        <!-- Replace src with your images -->
+        <img src="images/eltoro2.png" alt="Beauty Studio sample 1" loading="lazy">
+        <img src="images/eltoro1.png" alt="Beauty Studio sample 2" loading="lazy">
+        <img src="images/eltoro3.png" alt="Beauty Studio sample 3" loading="lazy">
+        <img src="images/eltoro7.png" alt="Beauty Studio sample 4" loading="lazy">
+        <img src="images/eltoro8.png" alt="Beauty Studio sample 5" loading="lazy">
+        <img src="images/eltoro9.png" alt="Beauty Studio sample 6" loading="lazy">
+        <img src="images/eltoro5.png" alt="Beauty Studio sample 7" loading="lazy">
+        <img src="images/eltoro4.png" alt="Beauty Studio sample 8" loading="lazy">
+        <img src="images/eltoro6.png" alt="Beauty Studio sample 9" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="case">
+      <div class="case-top">
+        <div>
+          <div style="font-weight:700">Véra Rosé</div>
+          <div style="color:var(--muted); font-size:13px; margin-top:2px;">Local storytelling • Menu features • Community tone</div>
+        </div>
+     
+      </div>
+
+      <div class="work-grid">
+        <!-- Replace src with your images -->
+        <img src="images/verarose1.png" alt="Cafe & Bistro sample 1" loading="lazy">
+        <img src="images/verarose2.png" alt="Cafe & Bistro sample 2" loading="lazy">
+        <img src="images/verarose3.png" alt="Cafe & Bistro sample 3" loading="lazy">
+        <img src="images/verarose4.png" alt="Cafe & Bistro sample 4" loading="lazy">
+        <img src="images/verarose5.png" alt="Cafe & Bistro sample 5" loading="lazy">
+        <img src="images/verarose6.png" alt="Cafe & Bistro sample 6" loading="lazy">
+        <img src="images/verarose7.png" alt="Cafe & Bistro sample 7" loading="lazy">
+        <img src="images/verarose8.png" alt="Cafe & Bistro sample 8" loading="lazy">
+        <img src="images/verarose9.png" alt="Cafe & Bistro sample 9" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+      <section id="pricing">
+        <div class="section-head">
+          <div>
+            <h2>Packages</h2>
+            <div class="hint">Clear packages. No confusion, no surprises.</div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="price">
+            <span class="badge">Starter</span>
+            <h3>Essentials</h3>
+            <div class="money">$700 <span style="font-size:14px; color:var(--muted); font-weight:500;">/month</span></div>
+            <ul>
+              <li>12 posts (mix of reels/carousels)</li>
+              <li>Caption writing + hashtags</li>
+              <li>Basic monthly report</li>
+              <li>1 revision round</li>
+            </ul>
+            <a class="btn" href="#contact">Choose Essentials</a>
+          </div>
+
+          <div class="price featured">
+            <span class="badge">Most popular</span>
+            <h3>Signature</h3>
+            <div class="money">$1,500 <span style="font-size:14px; color:var(--muted); font-weight:500;">/month</span></div>
+            <ul>
+              <li>30 posts + story set each week</li>
+              <li>Content calendar + strategy check-in</li>
+              <li>Community management (light)</li>
+              <li>Reporting + next-month plan</li>
+            </ul>
+            <a class="btn primary" href="#contact">Choose Signature</a>
+          </div>
+
+          <div class="price">
+            <span class="badge">Scale</span>
+            <h3>Studio+</h3>
+            <div class="money">$2,500 <span style="font-size:14px; color:var(--muted); font-weight:500;">/month</span></div>
+            <ul>
+              <li>30 posts + daily stories</li>
+              <li>Reels editing (advanced)</li>
+              <li>Ad creative support (light)</li>
+              <li>Priority turnaround</li>
+            </ul>
+            <a class="btn" href="#contact">Choose Studio+</a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h2>What you can expect</h2>
+            <div class="hint">Clear communication, consistent quality, and a stress-free content process.</div>
+          </div>
+        </div>
+
+<div class="grid-3">
+  <div class="quote">
+    <h3 style="margin:0 0 6px; font-size:16px;">Clear communication</h3>
+    <p style="margin:0; color:var(--muted); line-height:1.6; font-size: 14px;">
+      You’ll always know what’s being posted, when it’s going live, and why.
+      No guessing, no chasing.
+    </p>
+  </div>
+
+  <div class="quote">
+    <h3 style="margin:0 0 6px; font-size:16px;">Consistent quality</h3>
+    <p style="margin:0; color:var(--muted); line-height:1.6; font-size: 14px;">
+      A cohesive visual style and content direction that stays on-brand
+      across every post.
+    </p>
+  </div>
+
+  <div class="quote">
+    <h3 style="margin:0 0 6px; font-size:16px;">Stress-free process</h3>
+    <p style="margin:0; color:var(--muted); line-height:1.6; font-size: 14px;">
+      We handle planning, creation, and scheduling so you can focus
+      on running your business.
+    </p>
+  </div>
+</div>
+      </section>
+
+      <section id="contact">
+        <div class="section-head">
+          <div>
+            <h2>Contact</h2>
+            <div class="hint">Not sure where to start? Send us a message and we’ll guide you from there.</div>
+          </div>
+        </div>
+
+        <div class="contact">
+          <div class="form">
+            <div style="font-weight:700; margin-bottom:6px;">Book a discovery call</div>
+            <div style="color:var(--muted); font-size:14px; line-height:1.6;">
+              Tell us about your business, what platforms you use, and what “success” looks like for you.
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Mock form — connect this to your form tool.');" style="margin-top:10px;">
+              <label for="name">Name</label>
+              <input id="name" placeholder="Your name" required>
+
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@email.com" required>
+
+              <label for="brand">Business / Brand</label>
+              <input id="brand" placeholder="Brand name">
+
+              <label for="msg">What do you need help with?</label>
+              <textarea id="msg" placeholder="e.g., 4 reels/week, content refresh, IG growth, reporting…"></textarea>
+
+              <button class="btn primary" type="submit" style="margin-top:12px; width:100%; justify-content:center;">
+                Send message →
+              </button>
+            </form>
+          </div>
+
+          <div class="tile" style="padding:18px;">
+            <div style="font-weight:700;">Quick details</div>
+            <div style="margin-top:10px; color:var(--muted); line-height:1.7; font-size:14px;">
+              <div><b style="color:var(--text); font-weight:600;">Email:</b> hello@velorasocial.com</div>
+              <div><b style="color:var(--text); font-weight:600;">Response time:</b> within 24–48 hours</div>
+              <div><b style="color:var(--text); font-weight:600;">Platforms:</b> Instagram • TikTok • Facebook</div>
+              <div><b style="color:var(--text); font-weight:600;">Best for:</b> Beauty • Wellness • Food • Lifestyle</div>
+            </div>
+
+            <div style="margin-top:14px;" class="tile">
+              <div style="font-weight:700;">Free audit includes</div>
+              <p style="margin-top:6px; color:var(--muted); font-size:14px; line-height:1.6;">
+                Profile review, content gaps, quick wins, and a 30-day content direction.
+              </p>
+              <a class="btn" href="#pricing" style="margin-top:12px; width:100%; justify-content:center;">See packages</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="foot">
+          <div>© <span id="y"></span> Velora Social. All rights reserved.</div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <a href="#" style="color:var(--muted);">Instagram</a>
+            <a href="#" style="color:var(--muted);">TikTok</a>
+            <a href="#" style="color:var(--muted);">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+
+<script>
+  // ---- Count-up animation ----
+  const formatNumber = (n) => new Intl.NumberFormat().format(n);
+
+  function animateCount(el, duration = 1200) {
+    const end = parseFloat(el.dataset.value || "0");
+    const prefix = el.dataset.prefix || "";
+    const suffix = el.dataset.suffix || "";
+    const fmt = el.dataset.format || "number";
+
+    const decimals = (String(end).includes(".") ? String(end).split(".")[1].length : 0);
+
+    const startTime = performance.now();
+
+    function tick(now){
+      const t = Math.min((now - startTime) / duration, 1);
+      // easeOutCubic
+      const eased = 1 - Math.pow(1 - t, 3);
+
+      const current = end * eased;
+
+      let text;
+      if (fmt === "percent") {
+        text = current.toFixed(decimals);
+      } else {
+        // integers look better for most metrics
+        const val = decimals ? current.toFixed(decimals) : Math.round(current);
+        text = decimals ? val : formatNumber(val);
+      }
+
+      el.textContent = `${prefix}${text}${suffix}`;
+
+      if (t < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // ---- Bar fill animation ----
+  function animateBars() {
+    document.querySelectorAll(".spark[data-fill]").forEach((bar, i) => {
+      const fill = Math.max(0, Math.min(100, parseFloat(bar.dataset.fill)));
+      // slight stagger for a premium feel
+      setTimeout(() => {
+        bar.style.setProperty("--fill", fill + "%");
+        bar.classList.add("is-filled");
+        bar.style.setProperty("--fill", fill + "%");
+        bar.style.setProperty("--fill", fill + "%");
+        bar.style.setProperty("--fill", fill + "%");
+        bar.style.setProperty("--fill", fill + "%");
+        bar.style.setProperty("--fill", fill + "%");
+        bar.style.setProperty("--fill", fill + "%");
+        // set actual width via inline style on pseudo? we can't directly.
+        // so we toggle class and use data attribute -> set a CSS variable + use it in ::before
+      }, 120 + i * 90);
+    });
+  }
+
+  // Make spark::before use a CSS var for width
+  // (We set it right after DOM loads)
+  document.addEventListener("DOMContentLoaded", () => {
+    // set fill widths using CSS variables
+    document.querySelectorAll(".spark[data-fill]").forEach((bar) => {
+      const fill = Math.max(0, Math.min(100, parseFloat(bar.dataset.fill)));
+      bar.style.setProperty("--fill", fill + "%");
+    });
+
+    // animate numbers + bars
+    document.querySelectorAll(".countup").forEach((el, i) => {
+      setTimeout(() => animateCount(el, 1100), 80 + i * 120);
+    });
+
+    // trigger bar transitions (after variables are set)
+    setTimeout(() => {
+      document.querySelectorAll(".spark").forEach((bar, i) => {
+        setTimeout(() => bar.classList.add("is-filled"), i * 90);
+      });
+    }, 120);
+  });
+</script>
+
+
+
+</body>
+</html>
