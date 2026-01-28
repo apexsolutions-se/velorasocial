@@ -1,0 +1,762 @@
+<!-- Add this page as onboarding.html (same folder as index.html) -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Velora Social — Client Onboarding</title>
+  <meta name="description" content="Velora Social client onboarding — intake form and brand questionnaire." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.085);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --line: rgba(255,255,255,.12);
+      --brand: #7c5cff;
+      --brand2:#23d5ff;
+      --ok:#3dffb5;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1440px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #07080b;
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .wrap{
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 28px 18px 90px;
+
+  background:
+    radial-gradient(900px 600px at 15% 120px, rgba(124,92,255,.28), transparent 60%),
+    radial-gradient(900px 650px at 85% 160px, rgba(35,213,255,.22), transparent 60%),
+    radial-gradient(1100px 700px at 50% calc(100% - 120px), rgba(61,255,181,.14), transparent 60%),
+    linear-gradient(180deg, #07080b, var(--bg) 55%, #07080b);
+
+  border-radius: 28px;
+}
+.wrap::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  box-shadow: inset 0 0 120px rgba(0,0,0,.55);
+  border-radius: 28px;
+}
+
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 90px}
+
+    /* Top nav (matches main site) */
+    .nav{
+      position: sticky;
+      top: 14px;
+      z-index: 50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      background: rgba(12,14,19,.55);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:700; letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px;
+      object-fit: contain;
+      border-radius: 8px;
+      filter: drop-shadow(0 6px 18px rgba(124,92,255,.35));
+    }
+    .links{display:flex; gap:18px; align-items:center; flex-wrap:wrap}
+    .links a{
+      color:var(--muted);
+      font-size:14px;
+      padding:8px 10px;
+      border-radius:999px;
+    }
+    .links a:hover{color:var(--text); background: rgba(255,255,255,.06)}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap:9px;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18)}
+    .btn.primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#071018;
+      box-shadow: 0 16px 40px rgba(124,92,255,.22);
+    }
+    .btn.primary:hover{transform: translateY(-1px) scale(1.01)}
+
+    /* Page header */
+    .pagehead{
+      margin-top: 22px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding: 26px 24px;
+    }
+    h1{
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing:-.9px;
+      line-height: 1.05;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      max-width: 70ch;
+      font-size: 15px;
+    }
+    .meta-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      width: fit-content;
+    }
+    .dot{
+      position: relative;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+    }
+    .dot::after{
+      content:"";
+      position:absolute; inset:0;
+      border-radius:50%;
+      background: rgba(61,255,181,.35);
+      animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pulse{
+      0%{transform: scale(1); opacity:.55}
+      70%{transform: scale(3); opacity:0}
+      100%{transform: scale(3); opacity:0}
+    }
+
+    /* Layout */
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items:start;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card h2{
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: -.25px;
+    }
+    .hint{
+      margin:0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* Form controls */
+    form{margin:0}
+    .section{
+      padding: 14px 0 0;
+      border-top: 1px solid rgba(255,255,255,.10);
+      margin-top: 14px;
+    }
+    .section:first-of-type{border-top:0; margin-top:0; padding-top:0}
+    .section h3{
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,.86);
+      letter-spacing: -.1px;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    textarea{min-height: 110px; resize: vertical}
+    input:focus, textarea:focus, select:focus{border-color: rgba(35,213,255,.35)}
+
+    .checks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 6px;
+    }
+    .check{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+    }
+    .check input{
+      width: 16px;
+      height: 16px;
+      margin:0;
+      accent-color: #3dffb5;
+    }
+
+    .actions{
+      margin-top: 16px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .note{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .foot{
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr}
+      .row{grid-template-columns: 1fr}
+      .links{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- NAV -->
+    <header class="nav">
+      <div class="brand">
+        <img src="assets/velora.logo.png" alt="Velora Social logo" class="logo">
+        <div>
+          Velora Social
+          <div style="font-weight:500; font-size:12px; color:rgba(255,255,255,.55); margin-top:2px;">
+            Social media management & content
+          </div>
+        </div>
+      </div>
+
+      <nav class="links" aria-label="Primary">
+
+      </nav>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="btn" href="index.html">Back to site</a>
+        <a class="btn primary" href="#brand">Next →</a>
+      </div>
+    </header>
+
+    <!-- HEADER -->
+    <section class="pagehead">
+      <h1>Client onboarding</h1>
+      <p class="sub">
+        Please complete both forms below. Your answers help us build your content direction, voice,
+        and posting plan with clarity — without back-and-forth.
+      </p>
+
+      <div class="meta-row">
+        <span class="pill">We respond within 24–48 hours</span>
+      </div>
+    </section>
+
+    <!-- FORMS GRID -->
+    <div class="grid">
+
+      <!-- LEFT: CLIENT INTAKE -->
+      <section id="intake" class="card">
+        <h2>Client Intake Form</h2>
+        <p class="hint">Business details, accounts, goals, and how we should communicate.</p>
+
+        <form id="intakeForm">
+
+          <div class="section">
+            <h3>1. Business Overview</h3>
+
+            <label>Business / Brand Name</label>
+            <input name="business_name" placeholder=" " required>
+
+            <label>Website (if applicable)</label>
+            <input name="website" placeholder=" ">
+
+            <label>Primary contact name</label>
+            <input name="primary_contact_name" placeholder=" " required>
+
+            <label>Email address</label>
+            <input name="email_address" type="email" placeholder=" " required>
+
+            <label>Best contact method</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="best_contact_method" value="Email" required> Email</label>
+              <label class="check"><input type="radio" name="best_contact_method" value="WhatsApp"> WhatsApp</label>
+              <label class="check"><input type="radio" name="best_contact_method" value="Instagram DM"> Instagram DM</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>2. Social Media Accounts</h3>
+
+            <label>Platforms to be managed</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="platforms_managed" value="Instagram"> Instagram</label>
+              <label class="check"><input type="checkbox" name="platforms_managed" value="Facebook"> Facebook</label>
+              <label class="check"><input type="checkbox" name="platforms_managed" value="TikTok"> TikTok</label>
+              <label class="check"><input type="checkbox" name="platforms_managed" value="Other"> Other</label>
+            </div>
+
+            <label>Other platform (if selected)</label>
+            <input name="platforms_other" placeholder=" ">
+
+            <label>Links to your social media accounts</label>
+            <textarea name="social_media_links" placeholder=" "></textarea>
+
+            <label>Do you currently run paid ads?</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="paid_ads_status" value="Yes" required> Yes</label>
+              <label class="check"><input type="radio" name="paid_ads_status" value="No"> No</label>
+              <label class="check"><input type="radio" name="paid_ads_status" value="Previously, but not active"> Previously, but not active</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>3. Goals & Priorities</h3>
+
+            <label>What are your primary goals for social media? <span style="color:rgba(255,255,255,.45)">(Select up to 2)</span></label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="primary_goals" value="Brand awareness"> Brand awareness</label>
+              <label class="check"><input type="checkbox" name="primary_goals" value="Engagement & community growth"> Engagement & community growth</label>
+              <label class="check"><input type="checkbox" name="primary_goals" value="Website traffic"> Website traffic</label>
+              <label class="check"><input type="checkbox" name="primary_goals" value="Lead generation"> Lead generation</label>
+              <label class="check"><input type="checkbox" name="primary_goals" value="Sales / bookings"> Sales / bookings</label>
+            </div>
+
+            <label>What does success look like in 3–6 months?</label>
+            <textarea name="success_3_6_months" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>4. Brand Direction</h3>
+
+            <label>How would you describe your brand? <span style="color:rgba(255,255,255,.45)">(Select all that apply)</span></label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="brand_description" value="Clean / minimal"> Clean / minimal</label>
+              <label class="check"><input type="checkbox" name="brand_description" value="Premium / luxury"> Premium / luxury</label>
+              <label class="check"><input type="checkbox" name="brand_description" value="Friendly / approachable"> Friendly / approachable</label>
+              <label class="check"><input type="checkbox" name="brand_description" value="Bold / high-energy"> Bold / high-energy</label>
+              <label class="check"><input type="checkbox" name="brand_description" value="Educational"> Educational</label>
+              <label class="check"><input type="checkbox" name="brand_description" value="Other"> Other</label>
+            </div>
+
+            <label>Other brand description (if selected)</label>
+            <input name="brand_description_other" placeholder=" ">
+
+            <label>Brands or accounts you admire (optional)</label>
+            <textarea name="brands_admire" placeholder=" "></textarea>
+
+            <label>Any words, tones, or styles we should avoid?</label>
+            <textarea name="brand_avoid" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>5. Content & Assets</h3>
+
+            <label>Do you currently have content assets?</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="content_assets" value="Brand photos"> Brand photos</label>
+              <label class="check"><input type="checkbox" name="content_assets" value="Videos / Reels"> Videos / Reels</label>
+              <label class="check"><input type="checkbox" name="content_assets" value="Logos & brand guidelines"> Logos & brand guidelines</label>
+              <label class="check"><input type="checkbox" name="content_assets" value="None yet"> None yet</label>
+            </div>
+
+            <label>How often can you provide content (if required)?</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="content_provide_frequency" value="Weekly" required> Weekly</label>
+              <label class="check"><input type="radio" name="content_provide_frequency" value="Monthly"> Monthly</label>
+              <label class="check"><input type="radio" name="content_provide_frequency" value="Occasionally"> Occasionally</label>
+              <label class="check"><input type="radio" name="content_provide_frequency" value="Prefer Velora to guide content creation"> Prefer Velora to guide content creation</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>6. Ads & Budget (for Scale clients)</h3>
+
+            <label>Monthly ad budget (estimated)</label>
+            <input name="monthly_ad_budget" placeholder=" ">
+
+            <div class="note">
+              Note: Ad spend is paid directly to Meta and is not included in management fees.
+            </div>
+
+            <label>Primary goal for paid ads</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="paid_ads_goal" value="Reach & awareness"> Reach & awareness</label>
+              <label class="check"><input type="radio" name="paid_ads_goal" value="Website traffic"> Website traffic</label>
+              <label class="check"><input type="radio" name="paid_ads_goal" value="Leads"> Leads</label>
+              <label class="check"><input type="radio" name="paid_ads_goal" value="Sales"> Sales</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>7. Communication & Approvals</h3>
+
+            <label>Preferred approval process</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="approval_process" value="Review content before posting" required> Review content before posting</label>
+              <label class="check"><input type="radio" name="approval_process" value="Trust Velora to post without approval"> Trust Velora to post without approval</label>
+            </div>
+
+            <label>Preferred communication frequency</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="communication_frequency" value="Weekly" required> Weekly</label>
+              <label class="check"><input type="radio" name="communication_frequency" value="Bi-weekly"> Bi-weekly</label>
+              <label class="check"><input type="radio" name="communication_frequency" value="Monthly"> Monthly</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>8. Final Notes</h3>
+
+            <label>Is there anything else we should know before getting started?</label>
+            <textarea name="intake_final_notes" placeholder=" "></textarea>
+
+            <div class="note">
+              <b style="color:rgba(255,255,255,.86); font-weight:700;">By submitting this form,</b>
+              you confirm that all information provided is accurate and that Velora Social may use this information to develop and manage your social media strategy.
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- RIGHT: BRAND QUESTIONNAIRE -->
+      <section id="brand" class="card">
+        <h2>Brand Questionnaire</h2>
+        <p class="hint">Voice, visuals, messaging, and the details that make your brand feel unmistakably on-brand.</p>
+
+        <form id="brandForm">
+
+          <div class="section">
+            <h3>1. Brand Foundations</h3>
+
+            <label>In one sentence, what does your brand do?</label>
+            <input name="brand_foundation_sentence" placeholder=" ">
+
+            <label>Why does your brand exist? (What problem do you solve?)</label>
+            <textarea name="brand_foundation_why" placeholder=" "></textarea>
+
+            <label>What makes your brand different from competitors?</label>
+            <textarea name="brand_foundation_difference" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>2. Audience</h3>
+
+            <label>Who is your ideal customer? (Age, role, lifestyle, buying behavior)</label>
+            <textarea name="audience_ideal_customer" placeholder=" "></textarea>
+
+            <label>What problem are they trying to solve when they find you?</label>
+            <textarea name="audience_problem" placeholder=" "></textarea>
+
+            <label>What should they feel after interacting with your brand online?</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="audience_feel" value="Confident"> Confident</label>
+              <label class="check"><input type="checkbox" name="audience_feel" value="Inspired"> Inspired</label>
+              <label class="check"><input type="checkbox" name="audience_feel" value="Reassured"> Reassured</label>
+              <label class="check"><input type="checkbox" name="audience_feel" value="Educated"> Educated</label>
+              <label class="check"><input type="checkbox" name="audience_feel" value="Excited"> Excited</label>
+            </div>
+
+            <label>Other (optional)</label>
+            <input name="audience_feel_other" placeholder=" ">
+          </div>
+
+          <div class="section">
+            <h3>3. Brand Personality</h3>
+
+            <label>Choose up to 3 words that best describe your brand (e.g. modern, premium, friendly, bold, minimal, playful)</label>
+            <input name="brand_personality_words" placeholder=" ">
+
+            <label>Which statement fits your brand best?</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="brand_statement" value="Polished and professional" required> Polished and professional</label>
+              <label class="check"><input type="radio" name="brand_statement" value="Warm and conversational"> Warm and conversational</label>
+              <label class="check"><input type="radio" name="brand_statement" value="Bold and opinionated"> Bold and opinionated</label>
+              <label class="check"><input type="radio" name="brand_statement" value="Educational and trustworthy"> Educational and trustworthy</label>
+            </div>
+
+            <label>Are there any tones or personalities we should avoid?</label>
+            <textarea name="brand_personality_avoid" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>4. Voice & Language</h3>
+
+            <label>How should your brand speak?</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="brand_speak" value="Short and direct"> Short and direct</label>
+              <label class="check"><input type="checkbox" name="brand_speak" value="Story-driven"> Story-driven</label>
+              <label class="check"><input type="checkbox" name="brand_speak" value="Informative"> Informative</label>
+              <label class="check"><input type="checkbox" name="brand_speak" value="Sales-focused"> Sales-focused</label>
+              <label class="check"><input type="checkbox" name="brand_speak" value="Conversational"> Conversational</label>
+            </div>
+
+            <label>Words, phrases, or emojis you like (optional)</label>
+            <textarea name="voice_like" placeholder=" "></textarea>
+
+            <label>Words, phrases, or emojis we should avoid</label>
+            <textarea name="voice_avoid" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>5. Visual Direction</h3>
+
+            <label>Describe your visual style</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="visual_style" value="Clean / minimal"> Clean / minimal</label>
+              <label class="check"><input type="checkbox" name="visual_style" value="Dark & moody"> Dark & moody</label>
+              <label class="check"><input type="checkbox" name="visual_style" value="Bright & energetic"> Bright & energetic</label>
+              <label class="check"><input type="checkbox" name="visual_style" value="Luxury"> Luxury</label>
+              <label class="check"><input type="checkbox" name="visual_style" value="Editorial"> Editorial</label>
+              <label class="check"><input type="checkbox" name="visual_style" value="Other"> Other</label>
+            </div>
+
+            <label>Other (optional)</label>
+            <input name="visual_style_other" placeholder=" ">
+
+<label>Do you have brand guidelines?</label>
+<div class="checks">
+  <label class="check">
+    <input type="radio" name="brand_guidelines" value="Yes" id="bgYes" required>
+    Yes (we will upload them)
+  </label>
+  <label class="check">
+    <input type="radio" name="brand_guidelines" value="No" id="bgNo">
+    No
+  </label>
+</div>
+
+<!-- Hidden upload area -->
+<div id="bgUpload" style="display:none; margin-top:10px;">
+  <div class="note" style="margin-top:0;">
+    Please upload your brand guidelines (PDF preferred).<br>
+    <b style="color:rgba(255,255,255,.86);">File name:</b>
+    [Your Company Name] - Brand Guidelines
+  </div>
+
+  <label for="brand_guidelines_file">Upload brand guidelines</label>
+  <input
+    id="brand_guidelines_file"
+    name="brand_guidelines_file"
+    type="file"
+    accept=".pdf,.png,.jpg,.jpeg,.zip"
+  >
+</div>
+
+
+
+            <label>Accounts or brands whose visual style you like (links)</label>
+            <textarea name="visual_style_links" placeholder="Links"></textarea>
+          </div>
+
+          <div class="section">
+            <h3>6. Content Preferences</h3>
+
+            <label>Content you are comfortable posting</label>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="content_ok" value="Educational"> Educational</label>
+              <label class="check"><input type="checkbox" name="content_ok" value="Promotional"> Promotional</label>
+              <label class="check"><input type="checkbox" name="content_ok" value="Behind-the-scenes"> Behind-the-scenes</label>
+              <label class="check"><input type="checkbox" name="content_ok" value="Founder-focused"> Founder-focused</label>
+              <label class="check"><input type="checkbox" name="content_ok" value="Trend-based"> Trend-based</label>
+            </div>
+
+            <label>Content you are NOT comfortable posting</label>
+            <textarea name="content_not_ok" placeholder=" "></textarea>
+
+            <label>How visible should the founder/team be?</label>
+            <div class="checks">
+              <label class="check"><input type="radio" name="founder_visibility" value="Very visible" required> Very visible</label>
+              <label class="check"><input type="radio" name="founder_visibility" value="Occasionally"> Occasionally</label>
+              <label class="check"><input type="radio" name="founder_visibility" value="Not visible"> Not visible</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>7. Boundaries & Compliance</h3>
+
+            <label>Any topics, claims, or messaging we must avoid? (Legal, cultural, or brand restrictions)</label>
+            <textarea name="boundaries_avoid" placeholder=" "></textarea>
+
+            <label>Any required disclaimers or industry rules?</label>
+            <textarea name="boundaries_disclaimers" placeholder=" "></textarea>
+          </div>
+
+          <div class="section">
+            <h3>8. Final Alignment</h3>
+
+            <label>What does “good” social media look like to you?</label>
+            <textarea name="final_good_social" placeholder=" "></textarea>
+
+            <label>What would make you unhappy with our work?</label>
+            <textarea name="final_unhappy" placeholder=" "></textarea>
+
+            <label>Anything else you want us to know about your brand?</label>
+            <textarea name="final_anything_else" placeholder=" "></textarea>
+
+            <div class="note">
+              <b style="color:rgba(255,255,255,.86); font-weight:700;">Closing note:</b>
+              This questionnaire helps us ensure your content feels intentional, aligned, and unmistakably on-brand.
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+    </div>
+
+    <!-- ONE SUBMIT BUTTON -->
+    <div class="actions" style="margin-top:24px; justify-content:flex-end;">
+      <button id="submitAll" class="btn primary">Submit Form →</button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="foot">
+      <div>© <span id="y"></span> Velora Social</div>
+      <div>Need help? Email hello@velorasocial.com</div>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    document.getElementById("submitAll").addEventListener("click", () => {
+      const intakeForm = document.getElementById("intakeForm");
+      const brandForm  = document.getElementById("brandForm");
+
+      // Validate both forms before collecting data
+      if (!intakeForm.checkValidity() || !brandForm.checkValidity()) {
+        intakeForm.reportValidity();
+        brandForm.reportValidity();
+        return;
+      }
+
+      // Combine data into one payload
+      const combined = new FormData();
+      new FormData(intakeForm).forEach((v,k)=> combined.append(k,v));
+      new FormData(brandForm).forEach((v,k)=> combined.append(k,v));
+
+      // Demo output (replace with Formspree / Sheets / backend)
+      console.log("Onboarding submission:");
+      for (const [k,v] of combined.entries()) console.log(k + ":", v);
+
+      alert("Onboarding submitted successfully.");
+    });
+  </script>
+
+
+<script>
+  const bgYes = document.getElementById("bgYes");
+  const bgNo  = document.getElementById("bgNo");
+  const bgUpload = document.getElementById("bgUpload");
+  const bgFile = document.getElementById("brand_guidelines_file");
+
+  function toggleGuidelinesUpload(){
+    const show = bgYes.checked;
+    bgUpload.style.display = show ? "block" : "none";
+    bgFile.required = show; // require upload only if Yes is selected
+    if (!show) bgFile.value = "";
+  }
+
+  bgYes.addEventListener("change", toggleGuidelinesUpload);
+  bgNo.addEventListener("change", toggleGuidelinesUpload);
+</script>
+
+</body>
+
+</html>
